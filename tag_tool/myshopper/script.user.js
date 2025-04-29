@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         [TG3D] [Myshopper] Tag Tool
-// @version      1.0
+// @version      1.1
 // @description  tag tool for myshopper
 // @author       TG3D
 // @match        https://*.tg3ds.com/mtm/customer*
@@ -196,7 +196,7 @@ const initShowTagged = () => {
 
   const updateTagged = (item) => {
     const tags = item.getAttribute('data-tags') || '';
-    const isMatch = tags !== '';
+    const isMatch = tags.includes(':');
 
     const itemName = item.querySelector('.item-name');
     if (!itemName) return;
@@ -229,6 +229,16 @@ const initShowTagged = () => {
 
 // --- Custom --- //
 
+const TAG_TYPES = ['Small', 'Medium', 'Large', 'Straight', 'Natural', 'Wave'];
+
+const getSizeXtKey = (measure_name) => {
+  for (const part of Object.values(gCustomerDialogScope.measure_info)) {
+    const m = part.find(m => m.name === measure_name);
+    if (m) return m.key;
+  }
+  return null;
+}
+
 const addSelectElement = (options) => {
   const s = document.createElement('select');
   s.className = "tags-select";
@@ -256,17 +266,18 @@ const processMeasureItem = (item) => {
   if (item.querySelector('.tags-select')) return;
 
   const measure_name = item.querySelector('span.measure-name').innerText;
-  const s = addSelectElement(['', 'Small', 'Medium', 'Large', 'Straight', 'Natural', 'Wave']);
+  const key = getSizeXtKey(measure_name) || measure_name;
+  const s = addSelectElement(['', ...TAG_TYPES]);
   item.appendChild(s);
 
   s.onchange = () => {
-    selectTag(measure_name, s.value);
+    selectTag(key, s.value);
   };
   s.addEventListener('click', function (event) {
     event.stopPropagation();
   });
 
-  const index = gCustomerDialogScope.record.tag_list.findIndex(t => t.startsWith(`${measure_name}:`));
+  const index = gCustomerDialogScope.record.tag_list.findIndex(t => t.startsWith(`${key}:`));
   if (index > 0) {
     s.value = gCustomerDialogScope.record.tag_list[index].split(':')[1];
   }
@@ -279,7 +290,7 @@ const main = () => {
 {
     display: block;
     padding: 0.5rem 1rem;
-    font-size: 1rem;
+    font-size: 12px;
     line-height: 1.5;
     color: #1f2937;
     background-color: #fff;
