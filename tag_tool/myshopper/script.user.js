@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name         [TG3D] [Myshopper] Tag Tool
+// @namespace    https://www.tg3ds.com/
 // @version      1.1
 // @description  tag tool for myshopper
 // @author       TG3D

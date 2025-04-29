@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name         [TG3D] [DailyBelle] Tag Tool
+// @namespace    https://www.tg3ds.com/
 // @version      4.2
 // @description  新增自動標記按鈕
 // @author       TG3D
