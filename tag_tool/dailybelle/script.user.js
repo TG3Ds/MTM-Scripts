@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [TG3D] [DailyBelle] Tag Tool
 // @namespace    https://www.tg3ds.com/
-// @version      4.2
+// @version      4.3
 // @description  新增自動標記按鈕
 // @author       TG3D
 // @match        https://*.tg3ds.com/mtm/customer*
@@ -12,6 +12,7 @@
 // @grant        none
 // ==/UserScript==
 // changelog
+//   2025-12-18 v4.3: 修正胸型標籤
 //   2024-08-07 v4.2: 新增標籤
 //   2024-08-07 v4.1: 等待fetch完畢
 //   2024-08-07 v4.0: 將掃描標籤與使用者備註分離
@@ -95,17 +96,17 @@ const DEFAULT_TAGS_v1 = {
 const DEFAULT_TAGS = {
     "BreastShape": [
         "平胸型",
-        "小巧型",
         "小胸型",
-        "外擴型",
+        "小胸型",
+        "圓胸型",
         "水滴型",
         // "東西型",
         // "圓胸型",
         // "方胸型",
         // "鐘乳型",
-        "豐滿垂墜型",
+        // "豐滿垂墜型",
         // "豐腴垂墜型",
-        "細長垂墜型",
+        // "細長垂墜型",
     ],
     "Upper": [
         "胸部下垂",
