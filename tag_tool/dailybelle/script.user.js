@@ -12,6 +12,7 @@
 // @grant        none
 // ==/UserScript==
 // changelog
+//   2025-12-18 v5.0: 新增身形標籤，移除未使用的標籤
 //   2025-12-18 v4.3: 修正胸型標籤
 //   2024-08-07 v4.2: 新增標籤
 //   2024-08-07 v4.1: 等待fetch完畢
@@ -23,128 +24,43 @@
 //   2024-07-26 v1.2: 隱藏部分tags
 //   2024-07-22 v1.1: 拆分tags
 
-const DEFAULT_TAGS_v1 = {
-    "BreastShape": [
-        "鐘乳型",
-        "小巧型",
-        "木瓜型",
-        "東西型",
-        "水滴型",
-        "平胸型",
-        "南瓜型",
-        "巨乳型",
-        "方胸型",
-        "外擴型",
-        "小胸型",
-        "圓胸型"
-    ],
-    "Upper": [
-        "胸部下垂",
-        "外擴",
-        "雞胸",
-        "胸腔內凹",
-        "胸部高低",
-        "副乳",
-        "大小胸",
-        // "脊椎支撐",
-        "脊椎前傾",
-        "高脊心",
-        "低脊心",
-        // "垂肩",
-        "圓肩",
-        "肩凹",
-        "駝背",
-        "肩膀高低",
-        "富貴包",
-        "肩胛骨前後",
-        "手臂脂肪鬆弛",
-        "腹部脂肪鬆弛",
-        "胃凸",
-        // "柔軟型",
-        // "緊實型",
-        // "萎縮型",
-        "倒三角體態"
-    ],
-    "Lower": [
-        "馬鞍側寬",
-        "矯正骨盆",
-        "骨盆高低",
-        "骨盆前傾",
-        "骨盆後傾",
-        "窄骨盆",
-        "假跨寬",
-        "臀型扁塌",
-        "臀部下垂",
-        // "大腿淋巴腫大",
-        // "淋巴腫大",
-        "O型腿",
-        "X型腿",
-        "小腿肌旺盛",
-        "久坐久站",
-        "內褲過緊",
-        "窄臀",
-        // "提臀",
-        "修飾腿型",
-        // "雙腳水腫",
-        // "靜脈曲張",
-        // "痠痛硬麻",
-        // "沒有腰線",
-        // "雕塑臀型"
-    ]
-};
-
 const DEFAULT_TAGS = {
+    "BodyShape": [
+        "X型",
+        "A型",
+        "T型",
+        "O型",
+        "H型",
+    ],
     "BreastShape": [
         "平胸型",
-        "小胸型",
         "小胸型",
         "圓胸型",
         "水滴型",
-        // "東西型",
-        // "圓胸型",
-        // "方胸型",
-        // "鐘乳型",
-        // "豐滿垂墜型",
-        // "豐腴垂墜型",
-        // "細長垂墜型",
+        "輕微垂墜型",
+        "垂墜型",
     ],
     "Upper": [
+        "外擴型",
         "胸部下垂",
         "駝背",
-        "雞胸",
-        "胸腔內凹",
         "胸部高低",
         "副乳",
         "大小胸",
         "肩膀高低",
-        // "高脊心",
-        // "低脊心",
         "圓肩",
         "肩凹",
-        // "肩胛骨前後",
-        // "倒三角體態",
         "富貴包",
-        "手臂脂肪鬆弛",
-        "左胸完全切除",
-        "右胸完全切除",
-        "左胸局部切除",
-        "右胸局部切除",
+        "左胸組織異常",
+        "右胸組織異常",
     ],
     "Lower": [
         "腰間脂肪",
-        "骨盆高低",
         "骨盆前傾",
         "骨盆後傾",
-        // "O型腿",
-        // "X型腿",
-        // "OX型腿",
         "脊椎側彎",
-        "臀型扁塌",
-        // "臀部下垂",
         "內褲過緊",
         "小腿肌旺盛",
-        // "胃凸",
-        // "腹部脂肪鬆弛",
         "假胯寬",
     ],
 }
@@ -349,6 +265,7 @@ const watchTagList = (callback) => {
     });
 
     document.styleSheets[0].insertRule(".dailybelle-tags { display: flex; flex-wrap: wrap; margin-top: 24px; gap: 6px; color: white; font-size: 14px; font-weight: 300; }", 0);
+    document.styleSheets[0].insertRule(".dailybelle-tags-bodyshape button { background-color: #009B4C; }", 0);
     document.styleSheets[0].insertRule(".dailybelle-tags-breastshape button { background-color: #D4005C; }", 0);
     document.styleSheets[0].insertRule(".dailybelle-tags-upper button { background-color: #5C00D4; }", 0);
     document.styleSheets[0].insertRule(".dailybelle-tags-lower button { background-color: #D45C00; }", 0);
