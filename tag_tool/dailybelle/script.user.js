@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [TG3D] [DailyBelle] Tag Tool
 // @namespace    https://www.tg3ds.com/
-// @version      5.1
+// @version      5.2
 // @description  新增自動標記按鈕
 // @author       TG3D
 // @match        https://*.tg3ds.com/mtm/customer*
@@ -12,6 +12,7 @@
 // @grant        none
 // ==/UserScript==
 // changelog
+//   2026-03-17 v5.2: 修正無限遞迴
 //   2025-12-18 v5.1: 修正胸型標籤
 //   2025-12-18 v5.0: 新增身形標籤，移除未使用的標籤
 //   2025-12-18 v4.3: 修正胸型標籤
@@ -128,7 +129,7 @@ const waitElement = (selector, callback) => {
 const injectOkBtn = (btn) => {
     const scope = gCustomerDialogScope;
     if (scope) {
-        scope._is_dirty = scope.is_dirty;
+        if (!scope._is_dirty) scope._is_dirty = scope.is_dirty;
         scope.is_dirty = () => {
             if (!gCustomerDialogScope.record) return scope._is_dirty();
             const { tag_list } = gCustomerDialogScope.record;
@@ -137,7 +138,7 @@ const injectOkBtn = (btn) => {
             return scope._is_dirty() || isDirty;
         };
 
-        scope._origin_ok = scope.ok;
+        if (!scope._origin_ok) scope._origin_ok = scope.ok;
         scope.ok = async () => {
             try {
                 scope.is_updating = true;
